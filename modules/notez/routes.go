@@ -2,7 +2,7 @@ package notez
 
 import (
 	"notez/core"
-	"notez/utils/enums"
+	roles "notez/utils/enums"
 )
 
 var basePath = "/notez"
@@ -13,7 +13,7 @@ var Routes = core.Routes{
 		Method:  "GET",
 		Path:    basePath,
 		Auth:    true,
-		Roles:   enums.Roles{"user", "admin"},
+		Roles:   roles.Roles{roles.Admin, roles.User},
 		Handler: GetByUser,
 	},
 	core.Route{
@@ -21,7 +21,7 @@ var Routes = core.Routes{
 		Method:  "GET",
 		Path:    basePath + "/{id}",
 		Auth:    true,
-		Roles:   enums.Roles{"user", "admin"},
+		Roles:   roles.Roles{roles.Admin, roles.User},
 		Handler: GetOne,
 	},
 	core.Route{
@@ -29,7 +29,7 @@ var Routes = core.Routes{
 		Method:  "POST",
 		Path:    basePath,
 		Auth:    true,
-		Roles:   enums.Roles{"user", "admin"},
+		Roles:   roles.Roles{roles.Admin, roles.User},
 		Handler: CreateNew,
 	},
 }

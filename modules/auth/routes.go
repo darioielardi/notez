@@ -2,7 +2,7 @@ package auth
 
 import (
 	"notez/core"
-	"notez/utils/enums"
+	roles "notez/utils/enums"
 )
 
 var basePath = "/auth"
@@ -13,7 +13,7 @@ var Routes = core.Routes{
 		Method:  "GET",
 		Path:    basePath + "/me",
 		Auth:    true,
-		Roles:   enums.Roles{"admin", "user"},
+		Roles:   roles.Roles{roles.User, roles.Admin},
 		Handler: GetMe,
 	},
 }

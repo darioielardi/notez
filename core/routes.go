@@ -10,6 +10,7 @@ import (
 
 type ServerFunc func(s *Server) http.HandlerFunc
 
+// Route is the route struct that holds info on the route to bind to the router
 type Route struct {
 	Name    string
 	Method  string
@@ -19,6 +20,7 @@ type Route struct {
 	Handler ServerFunc
 }
 
+// Routes is a Route slice
 type Routes []Route
 
 func NewRouter() *mux.Router {
