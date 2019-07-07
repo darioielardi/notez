@@ -5,18 +5,19 @@ import (
 )
 
 func TestGetMe(t *testing.T) {
-	
+
 	e := NewExpect(t, "/auth")
-	
-	// Unauthorized
+
+	// Unauthenticated => 401
 	e.GET("/me").
 		Expect().
 		Status(401)
-	
-	tr := GetTestTokenRes()
-	
+
+	utr := GetUserTestToken()
+
+	// User auth => 200, User Data
 	e.GET("/me").
-		WithHeader("Authorization", "Bearer "+tr.Token).
+		WithHeader("Authorization", "Bearer "+utr.Token).
 		Expect().
 		Status(200).
 		JSON().
@@ -25,6 +26,21 @@ func TestGetMe(t *testing.T) {
 		Value("data").
 		Object().
 		ContainsKey("auth_id").
-		ValueEqual("auth_id", tr.UID)
-	
+		ValueEqual("auth_id", utr.UID)
+
+	atr := GetAdminTestToken()
+
+	// Admin auth => 200, User Data
+	e.GET("/me").
+		WithHeader("Authorization", "Bearer "+atr.Token).
+		Expect().
+		Status(200).
+		JSON().
+		Object().
+		ContainsKey("data").
+		Value("data").
+		Object().
+		ContainsKey("auth_id").
+		ValueEqual("auth_id", atr.UID)
+
 }
